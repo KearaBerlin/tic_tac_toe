@@ -19,12 +19,15 @@
 import sys
 import rospy
 import time
+import math
 from kortex_driver.srv import *
 from kortex_driver.msg import *
 
 class TicTacToeRobot:
 
-    RESTING_POSE = [0, 0.35, 0.08, -90, 0, 0]
+    #RESTING_POSE = [0, 0.35, 0.08, -90, 0, 0]
+    RESTING_POSE = [0.25, -0.25, 0.08, -90, 0, 0]
+    CENTER_POSE = [0.45, -0.45, 0.08, 90, 170, 45]
         
     def __init__(self):
         try:
@@ -196,33 +199,36 @@ class TicTacToeRobot:
     def mark_square(self, n):
         dz = 0.03
         square_width = 0.05
+        orthog_dist = 1/math.sqrt(2) * square_width
+        
+        print(f"Orthog dist: {orthog_dist}")
         
         # center square coordinates
-        x = 0
-        y = 0.55
-        z = 0.08
+        pose = TicTacToeRobot.CENTER_POSE
+        x = pose[0]	# 0
+        y = pose[1] 	# 0.55
+        z = pose[2]	# 0.08
         # orientation
-        tx = -90
-        ty = 0
-        tz = 0
+        tx = pose[3] 	# -90
+        ty = pose[4]	# 0
+        tz = pose[5]	# 0
         
         ## find coords if not marking center square
-        dx = 0
-        dy = 0
         # column
-        if n % 3 == 0:
-            dy = -square_width
-        elif (n-2) % 3 == 0:
-            dy = square_width
+        if n % 3 == 0: # go left (+x, +y)
+            x += orthog_dist
+            y += orthog_dist
+        elif (n-2) % 3 == 0: # go right (-x, -y)
+            x += -orthog_dist
+            y += -orthog_dist
         #row
-        if n <= 2:
-            dx = square_width
-        elif n >= 6:
-            dx = -square_width
-        # calculate coords
-        x += dx
-        y += dy
-        
+        if n <= 2: # go up (+x, -y)
+            x += orthog_dist
+            y += -orthog_dist
+        elif n >= 6: # go down (-x, +y)
+            x += -orthog_dist
+            y += orthog_dist
+            
         # move to pose
         self.go_to_pose([x, y, z, tx, ty, tz])
         
@@ -247,7 +253,7 @@ class TicTacToeRobot:
             
             #*******************************************************************************
             # Start from resting position
-            success &= self.example_home_the_robot()
+            #success &= self.example_home_the_robot()
             self.go_to_pose(TicTacToeRobot.RESTING_POSE)
             #*******************************************************************************
 
@@ -258,8 +264,10 @@ class TicTacToeRobot:
             #*******************************************************************************
             # Subscribe to ActionNotification's from the robot to know when a cartesian pose is finished
             success &= self.example_subscribe_to_a_robot_notification()
+            
+            rospy.spin()
 
 
 if __name__ == "__main__":
-    ex = ExampleCartesianActionsWithNotifications()
+    ex = TicTacToeRobot()
     ex.main()
