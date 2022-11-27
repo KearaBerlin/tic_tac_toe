@@ -20,14 +20,15 @@ import sys
 import rospy
 import time
 import math
+import random
 from kortex_driver.srv import *
 from kortex_driver.msg import *
 
 class TicTacToeRobot:
 
     #RESTING_POSE = [0, 0.35, 0.08, -90, 0, 0]
-    RESTING_POSE = [0.25, -0.25, 0.08, -90, 0, 0]
-    CENTER_POSE = [0.45, -0.45, 0.08, 90, 170, 45]
+    RESTING_POSE = [0.1, -0.2, 0.08, 90, 0, 90]
+    CENTER_POSE = [0.4, -0.4, 0.08, 90, 0, 90]
         
     def __init__(self):
         try:
@@ -160,6 +161,10 @@ class TicTacToeRobot:
 
     # move end effector to cartesian pose [x, y, z, theta_x, theta_y, theta_z] in meters and degrees
     def go_to_pose(self, pose):
+        n = random.randrange(100)
+        
+        self.example_clear_faults()
+    
         my_cartesian_speed = CartesianSpeed()
         my_cartesian_speed.translation = 0.1 # m/s
         my_cartesian_speed.orientation = 15  # deg/s
@@ -176,9 +181,9 @@ class TicTacToeRobot:
 
         req = ExecuteActionRequest()
         req.input.oneof_action_parameters.reach_pose.append(my_constrained_pose)
-        req.input.name = "pose1"
+        req.input.name = f"pose{n}"
         req.input.handle.action_type = ActionType.REACH_POSE
-        req.input.handle.identifier = 1001
+        req.input.handle.identifier = 1001 + n
 
         rospy.loginfo("Sending pose...")
         self.last_action_notif_type = None
@@ -253,7 +258,11 @@ class TicTacToeRobot:
             
             #*******************************************************************************
             # Start from resting position
-            #success &= self.example_home_the_robot()
+            # needs to go along a certain path or it may encounter errors
+            success &= self.example_home_the_robot()
+            self.go_to_pose([0.6, 0, 0.2, 90, 0, 90])
+            self.go_to_pose([0.5, -0.2, 0.2, 90, 0, 90])
+            self.go_to_pose([0.5, -0.2, 0.08, 90, 0, 90])
             self.go_to_pose(TicTacToeRobot.RESTING_POSE)
             #*******************************************************************************
 
