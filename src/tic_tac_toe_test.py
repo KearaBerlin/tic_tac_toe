@@ -8,4 +8,5 @@ from tic_tac_toe_robot import TicTacToeRobot as Robot
 
 if __name__ == "__main__":
     robot = Robot()
-    robot.mark_square(4)
+    for i in range(8):
+    	robot.mark_square(i)

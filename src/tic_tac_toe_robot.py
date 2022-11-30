@@ -29,6 +29,8 @@ class TicTacToeRobot:
     #RESTING_POSE = [0, 0.35, 0.08, -90, 0, 0]
     RESTING_POSE = [0.1, -0.2, 0.08, 90, 0, 90]
     CENTER_POSE = [0.4, -0.4, 0.08, 90, 0, 90]
+    
+    SQUARE_WIDTH = 0.03
         
     def __init__(self):
         try:
@@ -161,9 +163,6 @@ class TicTacToeRobot:
 
     # move end effector to cartesian pose [x, y, z, theta_x, theta_y, theta_z] in meters and degrees
     def go_to_pose(self, pose):
-        n = random.randrange(100)
-        
-        self.example_clear_faults()
     
         my_cartesian_speed = CartesianSpeed()
         my_cartesian_speed.translation = 0.1 # m/s
@@ -181,9 +180,9 @@ class TicTacToeRobot:
 
         req = ExecuteActionRequest()
         req.input.oneof_action_parameters.reach_pose.append(my_constrained_pose)
-        req.input.name = f"pose{n}"
+        req.input.name = "nextpose"
         req.input.handle.action_type = ActionType.REACH_POSE
-        req.input.handle.identifier = 1001 + n
+        req.input.handle.identifier = 1001
 
         rospy.loginfo("Sending pose...")
         self.last_action_notif_type = None
@@ -203,8 +202,7 @@ class TicTacToeRobot:
     # 6 7 8
     def mark_square(self, n):
         dz = 0.03
-        square_width = 0.05
-        orthog_dist = 1/math.sqrt(2) * square_width
+        orthog_dist = 1/math.sqrt(2) * TicTacToeRobot.SQUARE_WIDTH
         
         print(f"Orthog dist: {orthog_dist}")
         
