@@ -1,6 +1,7 @@
     <launch>
 
         <!-- Robot namespace -->
+<<<<<<< HEAD
         <arg name="robot_name" default="my_gen3_lite"/>
         <arg name="start_delay_seconds" default="0"/>
     
@@ -10,3 +11,14 @@
         </node>
 
     </launch>
+=======
+        <arg name="robot_name" default="my_gen3"/>
+        <arg name="start_delay_seconds" default="0"/>
+    
+        <!-- Launch the example in that namespace -->
+        <node name="cartesian_poses_with_notifications_python" pkg="kortex_examples" type="example_cartesian_poses_with_notifications.py" output="screen" launch-prefix="bash -c 'sleep $(arg start_delay_seconds); $0 $@' ">
+            <param name="robot_name" value="$(arg robot_name)"/>
+        </node>
+
+    </launch>
+>>>>>>> 1cecd2b97a3bc736a5afffdf72f1f4b8541384c8
