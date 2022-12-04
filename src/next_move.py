@@ -1,3 +1,16 @@
+# next_move.py
+# Provides a method get_best_move(board) which takes a length 9 list of strings
+# representing a Tic Tac Toe board, and returns the index of the best next move
+# and the best expected score for a game played to completion using that move
+# (1 for win, 0 for tie, -1 for loss).
+# Example: ['X','X','','O','O','','','',''] returns (2, 1)
+# because the board looks like this, with X to play next:
+# X X -
+# O O -
+# - - -
+# The bottom of the file has some test and example code which is executable.
+# Keara Berlin, 4 December 2022
+
 from enum import Enum
 import random
 import copy
@@ -28,8 +41,7 @@ def get_winner(line):
             return 'O'
     return ''
 
-# given a board (length 9 list of strings) and the symbol of the player to move
-# next ('X' or 'O'), returns the Result
+# given a board (length 9 list of strings), returns the Result
 def get_result(board):
     moves = moves_taken(board)
     if moves < 5:
@@ -60,6 +72,8 @@ def get_result(board):
 def get_possible_moves(board):
     return [i for i in range(len(board)) if board[i] == '']
 
+# given a board (length 9 list of strings), returns either 'X' or 'O' to indicate
+# which player moves next.
 def get_symbol(board):
     symbol = 'O'
     if moves_taken(board) % 2 == 0:
@@ -73,9 +87,8 @@ def take_move(board, i):
     new_board[i] = get_symbol(board)
     return new_board
 
-# given a board (length 9 list of strings) and a symbol for the next player who
-# must take a move (one of "X" or "O"), return the optimal next move (index) and
-# its score (1 for a win, 0 for a tie, -1 for a loss)
+# given a board (length 9 list of strings), return the optimal next move (index) and
+# its score (1 for a win, 0 for a tie, -1 for a loss) as a tuple.
 def get_best_move(board):
     symbol = get_symbol(board)
     opponent = 'X'
@@ -185,12 +198,15 @@ test_get_result(['X','O','X','X','O','O','X','',''], Result.X)
 # print(lines)
 
 # ------------------
+# examples / testing get_best_move() function
+# ------------------
 # board = ['' for i in range(9)]
 # board = ['X','X','','O','O','','','','']
 # board = ['O','O','','X','X','','','','']
 # board = ['X','O','X','O','X','O','','','']
 # board = ['X','O','X','O','X','X','','O','O']
 board = ['','O','O','','X','','','X','']
+
 i, score = get_best_move(board)
 print("\n\n----------------------\n The best move for board: ")
 print_board(board)
