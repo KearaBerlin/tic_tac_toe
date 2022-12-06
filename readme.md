@@ -5,9 +5,13 @@ This package works with the Kinova Gen3 Lite manipulator arm to play Tic Tac Toe
 1. Ensure you have python (https://www.python.org/downloads/) and ROS (http://wiki.ros.org/ROS/Installation) installed.
 2. Clone this repo into your catkin_ws/src directory.
 3. Set up and connect to the Kinova Gen3 Lite robot with your computer (see the manuals at https://www.kinovarobotics.com/product/gen3-lite-robots#Product__resources)
-4. Place a marker in the robot's gripper perpendicular to the plane the gripper moves in. For example, you may want to use a dot marker with a large, round tip. Set up your workspace to avoid getting ink on anything accidentally that you don't want to get ink on. You may want to try with the cap on the marker at first.
-5. Run in the command line `rosrun tic_tac_toe example_cartesian_poses_with_notifications.py`
-6. (Computer vision module to play Tic Tac Toe has not yet been implemented.)
+4. Set up a camera looking down on only the tic tac toe board.
+5. Use the Web App to set protection zones around the camera.
+6. Place a marker in the robot's gripper perpendicular to the plane the gripper moves in. For example, you may want to use a dot marker with a large, round tip. Set up your workspace to avoid getting ink on anything accidentally that you don't want to get ink on. You may want to try with the cap on the marker at first.
+7. In a command line window, run `roscore`
+8. In another window, run `roslaunch kortex_driver kortex_driver.launch arm:=gen3_lite`
+9. Run in the command line `rosrun tic_tac_toe example_cartesian_poses_with_notifications.py`
+10. (Computer vision module to play Tic Tac Toe has not yet been implemented.)
 
 ## Files
 **example_cartesian_poses_with_notifications.py** is a modified version of one of the kortex_examples, but this version allows the user to enter a cartesian pose in the command line, and the robot arm will move to that pose.
