@@ -10,17 +10,20 @@ import cv2 as cv
 def get_image():
 	
     # define a video capture object
-    vid = cv2.VideoCapture("/dev/<device-name>")
+    vid = cv.VideoCapture("/dev/video0")
     # Capture the video frame
     # by frame
     ret, frame = vid.read()
+    while frame is None or frame.empty:
+        ret, frame = vid.read()
+        
     # Display the resulting frame
-    cv2.imshow('frame', frame)
+    cv.imshow('frame', frame)
     if input('Continue? y/n') == 'y':
     	# After the loop release the cap object
         vid.release()
         # Destroy all the windows
-        cv2.destroyAllWindows()
+        cv.destroyAllWindows()
     return frame
 
 def create_game_state(img):
