@@ -185,21 +185,21 @@ class ExampleCartesianActionsWithNotifications:
     def main(self):
         #*******************************************************************************
         # Make sure to clear the robot's faults else it won't move if it's already in fault
-        success &= self.example_clear_faults()
+        self.example_clear_faults()
         #*******************************************************************************
             
         #*******************************************************************************
         # Start the example from the Home position
-        success &= self.example_home_the_robot()
+        self.example_home_the_robot()
         #*******************************************************************************
 
         #*******************************************************************************
         # Set the reference frame to "Mixed"
-        success &= self.example_set_cartesian_reference_frame()
+        self.example_set_cartesian_reference_frame()
 
         #*******************************************************************************
         # Subscribe to ActionNotification's from the robot to know when a cartesian pose is finished
-        success &= self.example_subscribe_to_a_robot_notification()
+        self.example_subscribe_to_a_robot_notification()
 
         #*******************************************************************************
 
@@ -207,7 +207,7 @@ class ExampleCartesianActionsWithNotifications:
             new_pose_str = input("Enter a new pose in the form x y z theta_x theta_y theta_z")
                 
             if new_pose_str == "HOME":
-                    success &= self.example_home_the_robot()
+                    self.example_home_the_robot()
             else:
                 new_pose_list = new_pose_str.split()
                 new_pose = [float(s) for s in new_pose_list]
