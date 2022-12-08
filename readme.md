@@ -7,12 +7,12 @@ This package works with the Kinova Gen3 Lite manipulator arm to play Tic Tac Toe
 3. Set up and connect to the Kinova Gen3 Lite robot with your computer (see the manuals at https://www.kinovarobotics.com/product/gen3-lite-robots#Product__resources)
 4. Set up a camera looking down on only the tic tac toe board.
 5. Use the Web App to set protection zones around the camera.
-6. Place a marker in the robot's gripper perpendicular to the plane the gripper moves in. For example, you may want to use a dot marker with a large, round tip. Set up your workspace to avoid getting ink on anything accidentally that you don't want to get ink on. You may want to try with the cap on the marker at first.
+6. Place a marker in the robot's gripper perpendicular to the plane the gripper moves in. For example, you may want to use a dot marker with a large, round tip. Set up your workspace to avoid getting ink on anything accidentally that you don't want to get ink on. You may want to try with the cap on the marker at first. Place a tic tac toe board under the camera with the center at x,y relative to the robot base (0.4, -0.4) and with the top of the board pointing straight away from the robot base.
 7. In a command line window, run `roscore`
 8. In another window, run `roslaunch kortex_driver kortex_driver.launch arm:=gen3_lite`
 9. Run in another window `rosrun tic_tac_toe example_cartesian_poses_with_notifications.py`
-10. Run in another window  `tic_tac_toe_CV.py` which should read an image from the camera, get the game state, and print it out.
-11. (A script that calls all necessary methods to then take the next move in the game is under development.)
+10. Run in another window `python3 play.py` which will look at the board, determine the game state, find the optimal next move, and mark the board.
+11. Make your own next move in the game and repeat step 10.
 
 ## Files
 **example_cartesian_poses_with_notifications.py** is a modified version of one of the kortex_examples, but this version allows the user to enter a cartesian pose in the command line, and the robot arm will move to that pose.
@@ -39,6 +39,8 @@ The bottom of the file has some test and example code which is executable.
 
     get_image(): Returns a still image from the camera attached to the computer (you may need to change the device name in VideoCapture("/dev/video0"))
     create_game_state(image): Returns a length 9 list of strings representing the game board state seen in image.
+
+**play.py** Plays one move of Tic Tac Toe autonomously.
 
 ## More Information
 This package was written during Fall 2022 as a project for CSCI 5551 (Introduction to Intelligent Robotic Systems) at the University of Minnesota.
