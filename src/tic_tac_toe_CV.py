@@ -7,9 +7,24 @@ Created on Sun Oct 23 15:42:50 2022
 
 import cv2 as cv
 
+def get_image():
+	
+    # define a video capture object
+    vid = cv2.VideoCapture("/dev/<device-name>")
+    # Capture the video frame
+    # by frame
+    ret, frame = vid.read()
+    # Display the resulting frame
+    cv2.imshow('frame', frame)
+    if input('Continue? y/n') == 'y':
+    	# After the loop release the cap object
+        vid.release()
+        # Destroy all the windows
+        cv2.destroyAllWindows()
+    return frame
 
-def create_game_state():
-    img = cv.imread("Board space2.png", 1)
+def create_game_state(img):
+    #img = cv.imread("Board space2.png", 1)
 #cv.imshow('img', img)
 
     height, width, c = img.shape
@@ -55,7 +70,7 @@ def detect(img):
                 
     return []
         
-
+print(create_game_state(get_image()))
 
 # # convert the image to grayscale format
 # img_gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
