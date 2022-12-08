@@ -7,9 +7,48 @@ Created on Sun Oct 23 15:42:50 2022
 
 import cv2 as cv
 
+def get_image():
+	
+    # define a video capture object
+    vid = cv.VideoCapture("/dev/video0")
+    # Capture the video frame
+    # by frame
+    ret, frame = vid.read()
+    while frame is None or frame.empty:
+        ret, frame = vid.read()
+        
+    # Display the resulting frame
+    cv.imshow('frame', frame)
+    if input('Continue? y/n') == 'y':
+    	# After the loop release the cap object
+        vid.release()
+        # Destroy all the windows
+        cv.destroyAllWindows()
+    return frame
 
-def create_game_state():
-    return []
+def create_game_state(img):
+    #img = cv.imread("Board space2.png", 1)
+#cv.imshow('img', img)
+
+    height, width, c = img.shape
+    h = height // 3
+    w = width // 3
+
+    board = []
+    for i in range(3):
+        for j in range(3):
+            filename = str(i*3 + j) + ".jpg"
+        #cv.imwrite(filename, img[i*h:(i+1)*h,j*h:(j+1)*h,:])
+            if detect(img[i*h:(i+1)*h,j*h:(j+1)*h,:]) == -1:
+                letter = 'O'
+            elif detect(img[i*h:(i+1)*h,j*h:(j+1)*h,:]) == 1:
+                letter = 'X'
+            else:
+                letter = ""
+            print(i*3 + j, ': ', letter)
+            board.append(letter)
+    
+    return board
     
 def detect(img):
     #detect X, O or empty
@@ -32,25 +71,9 @@ def detect(img):
         return 0
     
                 
-    return []    
-img = cv.imread("Board space2.png", 1)
-#cv.imshow('img', img)
-
-height, width, c = img.shape
-h = height // 3
-w = width // 3
-
-for i in range(3):
-    for j in range(3):
-        filename = str(i*3 + j) + ".jpg"
-        #cv.imwrite(filename, img[i*h:(i+1)*h,j*h:(j+1)*h,:])
-        if detect(img[i*h:(i+1)*h,j*h:(j+1)*h,:]) == -1:
-            letter = 'O'
-        elif detect(img[i*h:(i+1)*h,j*h:(j+1)*h,:]) == 1:
-            letter = 'X'
-        else:
-            letter = " "
-        print(i*3 + j, ': ', letter)
+    return []
+        
+print(create_game_state(get_image()))
 
 # # convert the image to grayscale format
 # img_gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
