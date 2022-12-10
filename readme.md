@@ -2,7 +2,7 @@
 This package works with the Kinova Gen3 Lite manipulator arm to play Tic Tac Toe on paper against a human opponent.
 
 ## Playing Tic Tac Toe With the Robot
-1. Ensure you have installed python (https://www.python.org/downloads/), ROS (http://wiki.ros.org/ROS/Installation), and the Kortex API (https://github.com/Kinovarobotics/kortex).
+1. Ensure you have installed python (https://www.python.org/downloads/), ROS (http://wiki.ros.org/ROS/Installation), and the ROS Kortex API (https://github.com/Kinovarobotics/ros_kortex).
 2. Clone this repo into your catkin_ws/src directory.
 3. Set up and connect to the Kinova Gen3 Lite robot with your computer (see the manuals at https://www.kinovarobotics.com/product/gen3-lite-robots#Product__resources)
 4. Set up a camera looking down on only the tic tac toe board.
@@ -17,9 +17,10 @@ This package works with the Kinova Gen3 Lite manipulator arm to play Tic Tac Toe
 ## Files
 **example_cartesian_poses_with_notifications.py** is a modified version of one of the kortex_examples, but this version allows the user to enter a cartesian pose in the command line, and the robot arm will move to that pose.
 
-**tic_tac_toe_robot.py** Sets up robot and provides methods to mark a square on a tic tac toe board centered in front of the robot: 
+**tic_tac_toe_robot.py** Sets up robot and provides methods to mark a square on a tic tac toe board centered in front of the robot, as well as to draw a line between two squares on the tic tac toe board: 
 
     mark_square(n): Marks square n on the board with a dot.
+    draw_line(s, e): Draws a line on the board between squares s and e.
    
 **tic_tac_toe_test.py** small test script that calls `mark_square` from `tic_tac_toe_robot.py` in a loop to mark each of the 9 squares.
 
@@ -45,4 +46,4 @@ The bottom of the file has some test and example code which is executable.
 ## More Information
 This package was written during Fall 2022 as a project for CSCI 5551 (Introduction to Intelligent Robotic Systems) at the University of Minnesota.
 
-Authors: Keara Berlin, A. N., S. T. I.
+Authors: Keara Berlin, Amarachi Nzeukwu, Sai Tarun Inaganti
