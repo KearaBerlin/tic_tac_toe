@@ -95,9 +95,6 @@ def get_best_move(board):
     if symbol == 'X':
         opponent = 'O'
 
-    print(f'GET BEST MOVE for')
-    print_board(board)
-    print(f'For player {symbol}')
 
     moves = get_possible_moves(board)
     #print(f'Moves: {moves}')
@@ -111,6 +108,8 @@ def get_best_move(board):
             #print("Returning immediate win move:")
             #print_board(new_board)
             return (move, 1)
+
+    
 
     # If there are no immediate wins, score all moves.
     for move in moves:
@@ -137,11 +136,23 @@ def get_best_move(board):
         moves_and_scores.append((move,score))
 
     # pick the best move
+
+    print(f'GET BEST MOVE for')
+    print_board(board)
+    print(f'For player {symbol}')
+
+    # avg = 0
+    # for (move, score) in moves_and_scores:
+    #     avg += score 
+    # avg = avg / len(moves_and_scores)
+
     random.shuffle(moves_and_scores)
     moves_and_scores.sort(key = lambda y: y[1])
     print(f'Moves and scores: {moves_and_scores}')
 
     return moves_and_scores[0]
+    # (move, score) = moves_and_scores[0]
+    # return (move, avg)
 
 # print a length 9 list as 3 rows of 3
 def print_board(board):
@@ -205,9 +216,9 @@ test_get_result(['X','O','X','X','O','O','X','',''], Result.X)
 # board = ['O','O','','X','X','','','','']
 # board = ['X','O','X','O','X','O','','','']
 # board = ['X','O','X','O','X','X','','O','O']
-board = ['','O','O','','X','','','X','']
+# board = ['','O','O','','X','','','X','']
 
-i, score = get_best_move(board)
-print("\n\n----------------------\n The best move for board: ")
-print_board(board)
-print(f"Is at index {i}")
+# i, score = get_best_move(board)
+# print("\n\n----------------------\n The best move for board: ")
+# print_board(board)
+# print(f"Is at index {i}")
