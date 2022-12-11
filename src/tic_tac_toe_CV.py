@@ -11,20 +11,20 @@ import matplotlib.pyplot as plt
 def get_image():
 	
     # define a video capture object
-    vid = cv.VideoCapture("/dev/video0")
+    vid = cv.VideoCapture("/dev/video2")
     # Capture the video frame
     # by frame
     ret, frame = vid.read()
-    while frame is None or frame.empty:
-        ret, frame = vid.read()
+    # while frame is None or frame.empty:
+    #     ret, frame = vid.read()
         
     # Display the resulting frame
     cv.imshow('frame', frame)
-    if input('Continue? y/n') == 'y':
+    # if input('Continue? y/n') == 'y':
     	# After the loop release the cap object
-        vid.release()
+    #    vid.release()
         # Destroy all the windows
-        cv.destroyAllWindows()
+    #    cv.destroyAllWindows()
     return frame
 
 def create_game_state(img):
@@ -79,12 +79,12 @@ def detect(img):
 
 def preprocess_image(img):
     height, width, c = img.shape
-    
+    cv.imwrite('og_img.jpg',img[:,:,:])
     center = (300, 350)
     m = cv.getRotationMatrix2D(center=center, angle=180, scale=1)
     img = cv.warpAffine(src=img, M=m, dsize=(width, height))
-    cropped_img = img[355:455,195:300,:]
-    plt.imshow(cropped_img[:,:,::-1])
+    cropped_img = img[335:435,167:270,:]
+    cv.imwrite('img.jpg',cropped_img)
     return cropped_img
     
         

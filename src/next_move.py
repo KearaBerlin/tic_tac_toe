@@ -100,7 +100,7 @@ def get_best_move(board):
     print(f'For player {symbol}')
 
     moves = get_possible_moves(board)
-    print(f'Moves: {moves}')
+    #print(f'Moves: {moves}')
     moves_and_scores = []
 
     # see if any move is a win right away. If so, return that move.
@@ -108,16 +108,16 @@ def get_best_move(board):
         new_board = take_move(board, move)
         result = get_result(new_board)
         if result.name == symbol:
-            print("Returning immediate win move:")
-            print_board(new_board)
+            #print("Returning immediate win move:")
+            #print_board(new_board)
             return (move, 1)
 
     # If there are no immediate wins, score all moves.
     for move in moves:
         new_board = take_move(board, move)
         result = get_result(new_board)
-        print_board(new_board)
-        print(f'result: {result}')
+        #print_board(new_board)
+        #print(f'result: {result}')
 
         # find the score
         if result == Result.TIE:
@@ -131,7 +131,7 @@ def get_best_move(board):
 
         # either return if it's a win, or store the move and score
         if score == 1:
-            print(f"Returning win move at location {move}")
+            #print(f"Returning win move at location {move}")
             return (move, score)
 
         moves_and_scores.append((move,score))

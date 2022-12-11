@@ -4,8 +4,9 @@
 ###
 
 from tic_tac_toe_robot import TicTacToeRobot as Robot
+from tic_tac_toe_CV import *
 from next_move import get_best_move
-from tic_tac_toe_CV import get_image, create_game_state
+# from tic_tac_toe_CV import get_image, create_game_state
 import sys
 
 if __name__ == "__main__":
@@ -13,7 +14,8 @@ if __name__ == "__main__":
     
     image = get_image()
     board = create_game_state(image)
-    square = get_best_move(board)
+    (square, score) = get_best_move(board)
     
     robot.mark_square(square)
     
+    print(board, square)

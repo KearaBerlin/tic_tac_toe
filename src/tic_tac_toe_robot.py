@@ -27,8 +27,9 @@ from kortex_driver.msg import *
 class TicTacToeRobot:
 
     #RESTING_POSE = [0, 0.35, 0.08, -90, 0, 0]
-    RESTING_POSE = [0.1, -0.2, 0.08, 90, 0, 90]
-    CENTER_POSE = [0.4, -0.4, 0.08, 90, 0, 90]
+    RESTING_POSE = [0.1, -0.2, 0.07, 90, 0, 90]
+    #CENTER_POSE = [0.4, -0.4, 0.08, 90, 0, 90]
+    CENTER_POSE = [0.43, -0.35, 0.07, 90, 0, 90]
     
     SQUARE_WIDTH = 0.03
         
@@ -233,12 +234,15 @@ class TicTacToeRobot:
             y += orthog_dist
             
         # move to pose
+        print("moving to pose above square")
         self.go_to_pose([x, y, z, tx, ty, tz])
         
         # move down by dz to touch paper
+        print("moving down")
         self.go_to_pose([x, y, z-dz, tx, ty, tz])
         
         # move back up
+        print("moving back up")
         self.go_to_pose([x, y, z, tx, ty, tz])
         
         self.go_to_pose(TicTacToeRobot.RESTING_POSE)
