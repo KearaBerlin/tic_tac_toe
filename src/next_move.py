@@ -89,7 +89,7 @@ def take_move(board, i):
 
 # given a board (length 9 list of strings), return the optimal next move (index) and
 # its score (1 for a win, 0 for a tie, -1 for a loss) as a tuple.
-def get_best_move(board):
+def get_best_move(board, depth=1):
     symbol = get_symbol(board)
     opponent = 'X'
     if symbol == 'X':
@@ -110,7 +110,7 @@ def get_best_move(board):
         if result.name == symbol:
             #print("Returning immediate win move:")
             #print_board(new_board)
-            return (move, 1)
+            return (move, 10-depth)
 
     # If there are no immediate wins, score all moves.
     for move in moves:
@@ -122,17 +122,17 @@ def get_best_move(board):
         # find the score
         if result == Result.TIE:
             score = 0
-        elif result.name == opponent:
-            score = -1
+        elif result.name == symbol:
+            score = 10 - depth
         else:
             # recurse
-            opponent_move, opponent_score = get_best_move(new_board)
+            opponent_move, opponent_score = get_best_move(new_board, depth+1)
             score = -1 * opponent_score
 
-        # either return if it's a win, or store the move and score
-        if score == 1:
-            #print(f"Returning win move at location {move}")
-            return (move, score)
+        # # either return if it's a win, or store the move and score
+        # if score == 1:
+        #     #print(f"Returning win move at location {move}")
+        #     return (move, score)
 
         moves_and_scores.append((move,score))
 
@@ -141,7 +141,7 @@ def get_best_move(board):
     moves_and_scores.sort(key = lambda y: y[1])
     print(f'Moves and scores: {moves_and_scores}')
 
-    return moves_and_scores[0]
+    return moves_and_scores[-1]
 
 # print a length 9 list as 3 rows of 3
 def print_board(board):
@@ -155,13 +155,13 @@ def test_moves_taken(board, expected):
         print(f"Returned {moves} instead of {expected} for ")
         print_board(board)
 
-test_moves_taken(['X','X','','O','O','','','',''], 4)
-test_moves_taken(['X','O','X','O','X','O','X','',''], 7)
-test_moves_taken(['X','O','X','O','X','O','X','O',''], 8)
-test_moves_taken(['X','O','X','X','X','O','O','X','O'], 9)
-test_moves_taken(['X','O','','X','','O','X','',''], 5)
-test_moves_taken(['','','','','O','','','',''], 1)
-test_moves_taken(['','','','','','','','',''], 0)
+# test_moves_taken(['X','X','','O','O','','','',''], 4)
+# test_moves_taken(['X','O','X','O','X','O','X','',''], 7)
+# test_moves_taken(['X','O','X','O','X','O','X','O',''], 8)
+# test_moves_taken(['X','O','X','X','X','O','O','X','O'], 9)
+# test_moves_taken(['X','O','','X','','O','X','',''], 5)
+# test_moves_taken(['','','','','O','','','',''], 1)
+# test_moves_taken(['','','','','','','','',''], 0)
 
 # ----------------
 # test the get_result() function
@@ -171,11 +171,11 @@ def test_get_result(board, expected):
         print(f"Returned {result} instead of {expected} for board:")
         print_board(board)
 
-test_get_result(['X','X','','O','O','','','',''], Result.INCOMPLETE)
-test_get_result(['X','O','X','O','X','O','X','',''], Result.X)
-test_get_result(['X','O','X','O','X','O','X','O',''], Result.X)
-test_get_result(['X','O','X','X','X','O','O','X','O'], Result.TIE)
-test_get_result(['X','O','X','X','O','O','X','',''], Result.X)
+# test_get_result(['X','X','','O','O','','','',''], Result.INCOMPLETE)
+# test_get_result(['X','O','X','O','X','O','X','',''], Result.X)
+# test_get_result(['X','O','X','O','X','O','X','O',''], Result.X)
+# test_get_result(['X','O','X','X','X','O','O','X','O'], Result.TIE)
+# test_get_result(['X','O','X','X','O','O','X','',''], Result.X)
 
 # -------------------
 # test getting rows and columns
@@ -205,7 +205,8 @@ test_get_result(['X','O','X','X','O','O','X','',''], Result.X)
 # board = ['O','O','','X','X','','','','']
 # board = ['X','O','X','O','X','O','','','']
 # board = ['X','O','X','O','X','X','','O','O']
-board = ['','O','O','','X','','','X','']
+board = ['X','','X','O','O','O','X','','']
+a = get_best_move(board)
 
 i, score = get_best_move(board)
 print("\n\n----------------------\n The best move for board: ")
