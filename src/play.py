@@ -9,7 +9,7 @@ from next_move import get_best_move
 # from tic_tac_toe_CV import get_image, create_game_state
 import sys
 
-if __name__ == "__main__":
+def main():
     robot = Robot()
     
     image = get_image()
@@ -19,3 +19,6 @@ if __name__ == "__main__":
     robot.mark_square(square)
     
     print(board, square)
+
+if __name__ == "__main__":
+    main()
