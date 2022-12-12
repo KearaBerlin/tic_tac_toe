@@ -10,7 +10,7 @@ This package works with the Kinova Gen3 Lite manipulator arm to play Tic Tac Toe
 6. Place a marker in the robot's gripper perpendicular to the plane the gripper moves in. For example, you may want to use a dot marker with a large, round tip. Set up your workspace to avoid getting ink on anything accidentally that you don't want to get ink on. You may want to try with the cap on the marker at first. Place a tic tac toe board under the camera with the center at x,y relative to the robot base (0.4, -0.4) and with the top of the board pointing straight away from the robot base.
 7. In a command line window, run `roscore`
 8. In another window, run `roslaunch kortex_driver kortex_driver.launch arm:=gen3_lite`
-9. Run in another window `roslaunch tic_tac_toe cartesian_poses_with_notifications.launch`
+9. Run in another window `roslaunch tic_tac_toe cartesian_poses_with_notifications_python.launch`
 10. Run in another window `python3 play.py` which will look at the board, determine the game state, find the optimal next move, and mark the board.
 11. Make your own next move in the game and repeat step 10.
 
