@@ -28,7 +28,7 @@ def get_image():
     return frame
 
 def create_game_state(img):
-    #img = cv.imread("test_images/Board space4.png", 1)
+    # img = cv.imread("test_images/Board space6.png", 1)
     #cv.imshow('img', img)
     
     img = preprocess_image(img)
@@ -79,12 +79,14 @@ def detect(img):
 
 def preprocess_image(img):
     height, width, c = img.shape
-    cv.imwrite('og_img.jpg',img[:,:,:])
-    center = (300, 350)
-    m = cv.getRotationMatrix2D(center=center, angle=180, scale=1)
+    #plt.imshow(img[:,:,::-1])
+    #cv.imwrite('og_img.jpg', img[:,:,:])
+    center = (400, 200)
+    m = cv.getRotationMatrix2D(center=center, angle=175, scale=1)
     img = cv.warpAffine(src=img, M=m, dsize=(width, height))
-    cropped_img = img[335:435,167:270,:]
-    cv.imwrite('img.jpg',cropped_img)
+    cropped_img = img[120:230,365:465,:]
+    #plt.imshow(cropped_img[:,:,::-1])
+    #cv.imwrite('img.jpg', cropped_img[:,:,:])
     return cropped_img
     
         
