@@ -33,21 +33,25 @@ import numpy as np
 #     return frame
 
 def draw_circles(frame):
-    frame = cv2.circle(frame, (335,167), radius=0, color=(0, 255, 0), thickness=5)
-    frame = cv2.circle(frame, (335,270), radius=0, color=(0, 255, 0), thickness=5)
-    frame = cv2.circle(frame, (435,167), radius=0, color=(0, 255, 0), thickness=5)
-    frame = cv2.circle(frame, (435,270), radius=0, color=(0, 255, 0), thickness=5)
+    frame = cv2.circle(frame, (365,120), radius=0, color=(0, 255, 0), thickness=5)
+    frame = cv2.circle(frame, (365,230), radius=0, color=(0, 255, 0), thickness=5)
+    frame = cv2.circle(frame, (465,120), radius=0, color=(0, 255, 0), thickness=5)
+    frame = cv2.circle(frame, (465,230), radius=0, color=(0, 255, 0), thickness=5)
     return frame
 
 def main():
     # global hand_hist
     # is_hand_hist_created = False
-    capture = cv2.VideoCapture(2)
+    capture = cv2.VideoCapture(0)
 
     while True:
         # pressed_key = cv2.waitKey(0)
 
         _, frame = capture.read()
+        center = (400, 200)
+        height, width, c = frame.shape
+        m = cv2.getRotationMatrix2D(center=center, angle=175, scale=1)
+        frame = cv2.warpAffine(src=frame, M=m, dsize=(width, height))
         # frame = draw_rect(frame)
         # frame = cv2.circle(frame, (30,10), radius=0, color=(0, 0, 255), thickness=10)
         frame = draw_circles(frame)

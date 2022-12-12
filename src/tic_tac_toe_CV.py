@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 def get_image():
 	
     # define a video capture object
-    vid = cv.VideoCapture("/dev/video2")
+    vid = cv.VideoCapture("/dev/video0")
     # Capture the video frame
     # by frame
     ret, frame = vid.read()
@@ -80,13 +80,13 @@ def detect(img):
 def preprocess_image(img):
     height, width, c = img.shape
     #plt.imshow(img[:,:,::-1])
-    #cv.imwrite('og_img.jpg', img[:,:,:])
+    cv.imwrite('og_img.jpg', img[:,:,:])
     center = (400, 200)
     m = cv.getRotationMatrix2D(center=center, angle=175, scale=1)
     img = cv.warpAffine(src=img, M=m, dsize=(width, height))
     cropped_img = img[120:230,365:465,:]
     #plt.imshow(cropped_img[:,:,::-1])
-    #cv.imwrite('img.jpg', cropped_img[:,:,:])
+    cv.imwrite('img.jpg', cropped_img[:,:,:])
     return cropped_img
     
         
